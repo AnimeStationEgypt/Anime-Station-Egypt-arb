@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Anime Station | محطة الأنمي - منصة أنمي ومانجا عربية بتصميم متجاوب للكمبيوتر والهاتف.">
+  <title>Anime Station | محطة الأنمي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Anime Station">
+      <span class="brand-mark">A</span>
+      <span><b>Anime Station</b><small>محطة الأنمي</small></span>
+    </a>
+    <nav class="nav">
+      <a class="active" href="#home">الرئيسية</a>
+      <a href="#anime">الأنمي</a>
+      <a href="#manga">المانجا</a>
+      <a href="#videos">الفيديوهات</a>
+    </nav>
+    <div class="header-actions">
+      <label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="ابحث عن أنمي أو مانجا..."></label>
+      <button class="menu-btn" id="menuBtn" aria-label="فتح القائمة">☰</button>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">ANIME STATION</span>
+        <h1>عالم الأنمي<br><strong>بين يديك.</strong></h1>
+        <p>اكتشف أشهر الأعمال، المانجا، والمشاهد المميزة في واجهة سريعة ومريحة على الكمبيوتر والهاتف.</p>
+        <div class="hero-buttons"><a href="#anime" class="primary">استكشف الأنمي</a><a href="#videos" class="secondary">شاهد الفيديوهات</a></div>
+      </div>
+      <div class="hero-art" aria-label="Anime Station artwork">
+        <div class="orb"></div><div class="hero-card c1">ONE<br><b>PIECE</b></div><div class="hero-card c2">NARUTO<br><b>SHIPPUDEN</b></div><div class="hero-card c3">DEMON<br><b>SLAYER</b></div>
+      </div>
+    </section>
+
+    <section class="section" id="anime">
+      <div class="section-head"><div><span class="eyebrow">DISCOVER</span><h2>أحدث وأشهر الأنمي</h2></div><button class="text-btn" data-filter="anime">عرض الكل ←</button></div>
+      <div class="grid" id="animeGrid"></div>
+    </section>
+
+    <section class="section manga-section" id="manga">
+      <div class="section-head"><div><span class="eyebrow">MANGA</span><h2>قسم المانجا</h2></div><button class="text-btn" data-filter="manga">عرض الكل ←</button></div>
+      <div class="grid" id="mangaGrid"></div>
+    </section>
+
+    <section class="section videos" id="videos">
+      <div class="section-head"><div><span class="eyebrow">WATCH</span><h2>فيديوهات ومشاهد تجريبية</h2></div></div>
+      <div class="video-grid" id="videoGrid"></div>
+    </section>
+  </main>
+
+  <div class="modal" id="detailModal" aria-hidden="true">
+    <div class="modal-box"><button class="close" id="closeModal">×</button><div id="modalContent"></div></div>
+  </div>
+
+  <footer><div><b>Anime Station</b><span>محطة الأنمي</span></div><p>واجهة تجريبية أصلية لعشاق الأنمي والمانجا.</p><span>© 2026 Anime Station</span></footer>
+  <script src="script.js"></script>
+</body>
+</html>
