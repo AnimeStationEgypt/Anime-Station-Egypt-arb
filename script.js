@@ -30,9 +30,28 @@ const videos=[
 ];
 
 const imgCache=new Map();
+const coverOverrides={
+ 'anime38000':'https://cdn.myanimelist.net/images/anime/1286/99889l.jpg',
+ 'anime5114':'https://cdn.myanimelist.net/images/anime/1208/94745l.jpg',
+ 'anime11061':'https://cdn.myanimelist.net/images/anime/1337/99013l.jpg',
+ 'anime1575':'https://cdn.myanimelist.net/images/anime/1032/135088l.jpg',
+ 'manga2':'https://cdn.myanimelist.net/images/manga/1/157897l.jpg',
+ 'manga13':'https://cdn.myanimelist.net/images/manga/2/253146l.jpg'
+};
+function sleep(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
 async function getCover(id,type='anime'){
- const key=type+id;if(imgCache.has(key))return imgCache.get(key);
- try{const r=await fetch(`https://api.jikan.moe/v4/${type==='manga'?'manga':'anime'}/${id}`);const j=await r.json();const u=j.data?.images?.jpg?.large_image_url||j.data?.images?.jpg?.image_url||'';imgCache.set(key,u);return u}catch(e){return ''}
+ const key=type+id;
+ if(imgCache.has(key))return imgCache.get(key);
+ if(coverOverrides[key]){imgCache.set(key,coverOverrides[key]);return coverOverrides[key]}
+ const endpoint=type==='manga'?'manga':'anime';
+ for(let attempt=0;attempt<3;attempt++){
+  try{
+   const r=await fetch(`https://api.jikan.moe/v4/${endpoint}/${id}`);
+   if(r.ok){const j=await r.json();const u=j.data?.images?.jpg?.large_image_url||j.data?.images?.jpg?.image_url||'';if(u){imgCache.set(key,u);return u}}
+   if(r.status===429)await sleep(900*(attempt+1));
+  }catch(e){if(attempt<2)await sleep(600*(attempt+1))}
+ }
+ return ''
 }
 function fallbackImage(el,title){el.onerror=null;el.src=`https://placehold.co/500x750/0d1a2c/67c8ff?text=${encodeURIComponent(title)}`}
 function card(item,type){
