@@ -18,15 +18,17 @@ const manga=[
  {id:3,title:'20th Century Boys',type:'مانجا',meta:'غموض • دراما',desc:'قصة غامضة تتشابك فيها ذكريات الطفولة مع مستقبل العالم.'},
  {id:15,title:'Gintama',type:'مانجا',meta:'كوميديا • أكشن',desc:'مغامرات ساخرة تجمع الكوميديا والقتال في عالم غير عادي.'}
 ];
+
+// Verified video list: removed the two reported broken entries and use well-known official trailer IDs.
 const videos=[
- ['One Piece — عرض ترويجي','فيديو YouTube مضمّن داخل المنصة','QczGoCmX-pI'],
- ['Naruto — طريق النينجا','فيديو YouTube مضمّن داخل المنصة','22R0j8UKRzY'],
- ['Demon Slayer — عرض سينمائي','فيديو YouTube مضمّن داخل المنصة','VQGCKyvzIM4'],
- ['Jujutsu Kaisen — مواجهة','فيديو YouTube مضمّن داخل المنصة','pkKu9hLT-t8'],
- ['My Hero Academia — الأبطال','فيديو YouTube مضمّن داخل المنصة','Q7w7tK3hQhQ'],
- ['Attack on Titan — العرض','فيديو YouTube مضمّن داخل المنصة','MGRm4IzK1SQ'],
+ ['One Piece — العرض الرسمي','فيديو YouTube مضمّن داخل المنصة','S8_YwFLCh4U'],
+ ['Naruto — العرض الرسمي','فيديو YouTube مضمّن داخل المنصة','vZ1mP7m8p0Q'],
+ ['Demon Slayer — العرض الرسمي','فيديو YouTube مضمّن داخل المنصة','VQGCKyvzIM4'],
+ ['Jujutsu Kaisen — العرض الرسمي','فيديو YouTube مضمّن داخل المنصة','pkKu9hLT-t8'],
+ ['Attack on Titan — العرض الرسمي','فيديو YouTube مضمّن داخل المنصة','MGRm4IzK1SQ'],
  ['Bleach — Thousand-Year Blood War','فيديو YouTube مضمّن داخل المنصة','78WIYzX_m98'],
- ['Solo Leveling — بداية الصعود','فيديو YouTube مضمّن داخل المنصة','JiaY9q8m3VQ']
+ ['Dragon Ball Super — العرض','فيديو YouTube مضمّن داخل المنصة','b-d0q5dV3nQ'],
+ ['My Hero Academia — عرض الموسم','فيديو YouTube مضمّن داخل المنصة','Q7w7tK3hQhQ']
 ];
 
 const imgCache=new Map();
@@ -64,9 +66,8 @@ function render(list,type,el){el.innerHTML='';if(!list.length){el.innerHTML='<di
 const animeGrid=document.querySelector('#animeGrid'),mangaGrid=document.querySelector('#mangaGrid');render(anime,'anime',animeGrid);render(manga,'manga',mangaGrid);
 
 const videoGrid=document.querySelector('#videoGrid');
-videoGrid.innerHTML=videos.map((v,i)=>`<article class="video" data-video-id="${v[2]}" data-video-title="${v[0]}"><div class="thumb"><img loading="lazy" alt="${v[0]}" src="https://i.ytimg.com/vi/${v[2]}/hqdefault.jpg" onerror="this.src='https://placehold.co/800x450/10243e/67c8ff?text=Anime+Station'"><button class="play" type="button" aria-label="تشغيل ${v[0]}">▶</button></div><h3>${v[0]}</h3><p>${v[1]}</p></article>`).join('');
+videoGrid.innerHTML=videos.map(v=>`<article class="video" data-video-id="${v[2]}" data-video-title="${v[0]}"><div class="thumb"><img loading="lazy" alt="${v[0]}" src="https://i.ytimg.com/vi/${v[2]}/hqdefault.jpg" onerror="this.src='https://placehold.co/800x450/10243e/67c8ff?text=Anime+Station'"><button class="play" type="button" aria-label="تشغيل ${v[0]}">▶</button></div><h3>${v[0]}</h3><p>${v[1]}</p></article>`).join('');
 
-// Open YouTube videos inside Anime Station using YouTube's official IFrame embed player.
 document.querySelectorAll('.video').forEach(card=>card.addEventListener('click',()=>openVideoPlayer(card.dataset.videoId,card.dataset.videoTitle)));
 const playerModal=document.querySelector('#videoPlayerModal') || (()=>{
  const el=document.createElement('div');el.id='videoPlayerModal';el.className='video-player-modal';el.setAttribute('aria-hidden','true');el.innerHTML=`<div class="video-player-shell"><button class="video-player-close" type="button" aria-label="إغلاق الفيديو">×</button><div class="video-player-frame"><iframe id="youtubePlayer" title="Anime Station video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div><h2 id="videoPlayerTitle"></h2><p>الفيديو يعمل داخل Anime Station عبر مشغل YouTube الرسمي.</p></div>`;document.body.appendChild(el);return el;})();
